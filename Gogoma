@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arab Coin Clicker</title>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
+        #game-container { margin-top: 50px; }
+        #coin-button { font-size: 20px; padding: 20px; background: green; color: white; border: none; cursor: pointer; }
+        #floating-text { position: absolute; color: red; font-size: 18px; display: none; }
+        .shop-item { margin: 10px; padding: 10px; background: white; border: 1px solid #ccc; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Arab Coin Clicker</h1>
+    <div id="game-container">
+        <button id="coin-button" py-click="earn_coin()">+1 Arab Coin</button>
+        <p>Монеты: <span id="coin-count">0</span></p>
+        <p>Клики: <span id="click-count">0</span></p>
+        <p>Время игры: <span id="time-played">0</span> секунд</p>
+    </div>
+
+    <h2>Магазин</h2>
+    <div id="shop">
+        <div class="shop-item" py-click="buy_item('АК-47', 100)">
+            <p>🔫 АК-47 - 100 монет</p>
+        </div>
+        <div class="shop-item" py-click="buy_item('Костюм Хазмат', 150)">
+            <p>🧥 Костюм Хазмат - 150 монет</p>
+        </div>
+        <div class="shop-item" py-click="buy_item('Зимний Хазмат', 200)">
+            <p>🧥❄ Зимний Хазмат - 200 монет</p>
+        </div>
+    </div>
+
+    <p>Купленные предметы: <span id="purchased-items">Нет</span></p>
+
+    <py-script>
+        from js import document
+        from pyodide.ffi import create_proxy
+        import time
+
+        coins = 0
+        clicks = 0
+        start_time = time.time()
+        purchased_items = []
+
+        def update_ui():
+            document.getElementById("coin-count").innerText = str(coins)
+            document.getElementById("click-count").innerText = str(clicks)
+            document.getElementById("time-played").innerText = str(int(time.time() - start_time))
+            document.getElementById("purchased-items").innerText = ", ".join(purchased_items) if purchased_items else "Нет"
+
+        def earn_coin(event=None):
+            global coins, clicks
+            coins += 1
+            clicks += 1
+            update_ui()
+
+        def buy_item(item, cost):
+            global coins
+            if coins >= cost:
+                coins -= cost
+                purchased_items.append(item)
+                update_ui()
+            else:
+                alert("Недостаточно монет!")
+
+        def alert(message):
+            from js import window
+            window.alert(message)
+
+        document.getElementById("coin-button").addEventListener("click", create_proxy(earn_coin))
+    </py-script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arab Coin Clicker</title>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; }
+        #game-container { margin-top: 50px; }
+        #coin-button { font-size: 20px; padding: 20px; background: green; color: white; border: none; cursor: pointer; }
+        #floating-text { position: absolute; color: red; font-size: 18px; display: none; }
+        .shop-item { margin: 10px; padding: 10px; background: white; border: 1px solid #ccc; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Arab Coin Clicker</h1>
+    <div id="game-container">
+        <button id="coin-button" py-click="earn_coin()">+1 Arab Coin</button>
+        <p>Монеты: <span id="coin-count">0</span></p>
+        <p>Клики: <span id="click-count">0</span></p>
+        <p>Время игры: <span id="time-played">0</span> секунд</p>
+    </div>
+
+    <h2>Магазин</h2>
+    <div id="shop">
+        <div class="shop-item" py-click="buy_item('АК-47', 100)">
+            <p>🔫 АК-47 - 100 монет</p>
+        </div>
+        <div class="shop-item" py-click="buy_item('Костюм Хазмат', 150)">
+            <p>🧥 Костюм Хазмат - 150 монет</p>
+        </div>
+        <div class="shop-item" py-click="buy_item('Зимний Хазмат', 200)">
+            <p>🧥❄ Зимний Хазмат - 200 монет</p>
+        </div>
+    </div>
+
+    <p>Купленные предметы: <span id="purchased-items">Нет</span></p>
+
+    <py-script>
+        from js import document
+        from pyodide.ffi import create_proxy
+        import time
+
+        coins = 0
+        clicks = 0
+        start_time = time.time()
+        purchased_items = []
+
+        def update_ui():
+            document.getElementById("coin-count").innerText = str(coins)
+            document.getElementById("click-count").innerText = str(clicks)
+            document.getElementById("time-played").innerText = str(int(time.time() - start_time))
+            document.getElementById("purchased-items").innerText = ", ".join(purchased_items) if purchased_items else "Нет"
+
+        def earn_coin(event=None):
+            global coins, clicks
+            coins += 1
+            clicks += 1
+            update_ui()
+
+        def buy_item(item, cost):
+            global coins
+            if coins >= cost:
+                coins -= cost
+                purchased_items.append(item)
+                update_ui()
+            else:
+                alert("Недостаточно монет!")
+
+        def alert(message):
+            from js import window
+            window.alert(message)
+
+        document.getElementById("coin-button").addEventListener("click", create_proxy(earn_coin))
+    </py-script>
+</body>
+</html>
